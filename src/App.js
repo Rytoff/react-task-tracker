@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import AddTask from './components/AddTask'
+import Footer from './components/Footer'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 
@@ -89,6 +90,7 @@ function App() {
       ) : (
         'No Tasks to Show'
       )}
+      <Footer />
     </div>
   )
 }
