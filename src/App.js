@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
 import AddTask from './components/AddTask'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
+import About from './components/About'
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
+  
   useEffect(() => {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks()
@@ -77,22 +81,55 @@ function App() {
       )
     )
   }
-
   return (
-    <div className="container">
-      <Header
-        onAdd={() => setShowAddTask(!showAddTask)}
-        showAdd={showAddTask}
-      />
-      {showAddTask && <AddTask onAdd={addTask} />}
-      {tasks.length > 0 ? (
-        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
-      ) : (
-        'No Tasks to Show'
-      )}
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className="container">
+        <Header
+          onAdd={() => setShowAddTask(!showAddTask)}
+          showAdd={showAddTask}
+        />
+        {showAddTask && <AddTask onAdd={addTask} />}
+        { tasks.length > 0 ? (
+          <Tasks
+            tasks={tasks}
+            onDelete={deleteTask}
+            onToggle={toggleReminder}
+          />
+        ) : (
+          'No Tasks to Show'
+        )}
+        <Routes>
+          <Route path="about" element={<About />} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter>
   )
+
+  // return (
+  //   <BrowserRouter>
+  //     <div className="container">
+  //       <Header
+  //         onAdd={() => setShowAddTask(!showAddTask)}
+  //         showAdd={showAddTask}
+  //       />
+  //       {showAddTask && <AddTask onAdd={addTask} />}
+  //       {tasks.length > 0 ? (
+  //         <Tasks
+  //           tasks={tasks}
+  //           onDelete={deleteTask}
+  //           onToggle={toggleReminder}
+  //         />
+  //       ) : (
+  //         'No Tasks to Show'
+  //       )}
+  //       <Routes>
+  //         <Route path="about" element={<About />} />
+  //       </Routes>
+  //       <Footer />
+  //     </div>
+  //   </BrowserRouter>
+  // )
 }
 
 export default App
